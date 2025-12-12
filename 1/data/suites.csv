@@ -1,8 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Fri Aug 08 13:43:48 GMT 2025","Fri Aug 08 13:43:49 GMT 2025","884","","","","","","UC-3 Test - Login form with credentials by passing Username & Password",""
-"passed","Fri Aug 08 13:43:47 GMT 2025","Fri Aug 08 13:43:48 GMT 2025","979","","","","","","UC-3 Test - Login form with credentials by passing Username & Password",""
-"passed","Fri Aug 08 13:43:56 GMT 2025","Fri Aug 08 13:43:56 GMT 2025","767","","","","","","UC-3 Test - Login form with credentials by passing Username & Password",""
-"passed","Fri Aug 08 13:43:56 GMT 2025","Fri Aug 08 13:43:57 GMT 2025","790","","","","","","UC-2 Test - Login form with credentials by passing Username",""
-"passed","Fri Aug 08 13:43:57 GMT 2025","Fri Aug 08 13:43:58 GMT 2025","861","","","","","","UC-1 Test - Login form with empty credentials",""
-"passed","Fri Aug 08 13:43:49 GMT 2025","Fri Aug 08 13:43:50 GMT 2025","890","","","","","","UC-3 Test - Login form with credentials by passing Username & Password",""
-"passed","Fri Aug 08 13:43:50 GMT 2025","Fri Aug 08 13:43:56 GMT 2025","5896","","","","","","UC-3 Test - Login form with credentials by passing Username & Password",""
