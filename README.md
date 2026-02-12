@@ -1,4 +1,4 @@
-## Repository Magdelena Kałucka
+## Repository Magdelena Michalska
 This repository present automated tests for website:
 
 > https://www.automationexercise.com. 
