@@ -43,11 +43,8 @@ jobs:
         distribution: temurin
         java-version: 17
     
-    - name: Install Allure CLI
-      run: |
-        sudo apt-add-repository ppa:qameta/allure -y
-        sudo apt-get update
-        sudo apt-get install allure -y
+    - name: Setup Allure CLI
+      uses: qameta/allure-github-action@v2
 
     - name: Generate Allure Report
       run: |
