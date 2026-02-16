@@ -71,9 +71,9 @@ test.describe('Add product to cart', () => {
     //Act
     await productPage.product1.dispatchEvent('click');
     await mainPage.continueShopping.click();
-    await productPage.product4.click();
+    await productPage.product4.dispatchEvent('click');
     await mainPage.continueShopping.click();
-    await productPage.product15.click();
+    await productPage.product15.dispatchEvent('click');
     await mainPage.vievCartLink.click();
 
     //Asert
@@ -86,7 +86,7 @@ test.describe('Add product to cart', () => {
     //Act
     await productPage.sideMenu.women.click();
     await productPage.sideMenu.womenDress.click();
-    await productPage.product3Women.click();
+    await productPage.product3Women.dispatchEvent('click');
     await mainPage.continueShopping.click();
 
     await productPage.sideMenu.men.click();
@@ -96,7 +96,7 @@ test.describe('Add product to cart', () => {
 
     await productPage.sideMenu.kids.click();
     await productPage.sideMenu.kidsTopShirts.click();
-    await productPage.product15.click();
+    await productPage.product15.dispatchEvent('click');
     await mainPage.vievCartLink.click();
 
     //Asert
@@ -108,19 +108,19 @@ test.describe('Add product to cart', () => {
 
     //Act
     await productPage.sideMenu.polo.click();
-    await productPage.product8Polo.click();
+    await productPage.product8Polo.dispatchEvent('click');
     await mainPage.continueShopping.click();
 
     await productPage.sideMenu.madame.click();
-    await productPage.product38Madame.click();
+    await productPage.product38Madame.dispatchEvent('click');
     await mainPage.continueShopping.click();
 
     await productPage.sideMenu.babyhug.click();
-    await productPage.product15.click();
+    await productPage.product15.dispatchEvent('click');
     await mainPage.continueShopping.click();
 
     await productPage.sideMenu.biba.click();
-    await productPage.product40Biba.click();
+    await productPage.product40Biba.dispatchEvent('click');
     await mainPage.vievCartLink.click();
 
     //Asert

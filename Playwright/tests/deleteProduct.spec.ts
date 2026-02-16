@@ -104,17 +104,17 @@ test.describe('Delete product from the cart', () => {
     //Arrange
     await productPage.sideMenu.women.click();
     await productPage.sideMenu.womenDress.click();
-    await productPage.product3Women.click();
+    await productPage.product3Women.dispatchEvent('click');
     await mainPage.continueShopping.click();
 
     await productPage.sideMenu.men.click();
     await productPage.sideMenu.menJeans.click();
-    await productPage.product35Men.click();
+    await productPage.product35Men.dispatchEvent('click');
     await mainPage.continueShopping.click();
 
     await productPage.sideMenu.kids.click();
     await productPage.sideMenu.kidsTopShirts.click();
-    await productPage.product15.click();
+    await productPage.product15.dispatchEvent('click');
     await mainPage.vievCartLink.click();
 
     let number: number = 2; ;
