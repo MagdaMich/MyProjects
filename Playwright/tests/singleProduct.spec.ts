@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { LoginSignUpPage } from '../pages/loginSignUp.page';
 import { EmailGenerator } from '../test-data/emailGenerator';
 import { ProductPage } from '../pages/product.page';
@@ -12,38 +12,34 @@ test.describe('Product page', () => {
   let singleProductPage: SingleProductPage;
   let mainPage: MainPage;
   let cartPage: CartPage;
-  let email;
+  let email: string;
 
-  test.beforeEach(async ({ page }) => {
-    productPage = new ProductPage(page);
-    singleProductPage = new SingleProductPage(page);
-    loginSignUp = new LoginSignUpPage(page);
-    mainPage = new MainPage(page);
-    cartPage = new CartPage(page);
+  test.beforeEach(async ({ pageWithAdHandler }) => {
+    productPage = new ProductPage(pageWithAdHandler);
+    singleProductPage = new SingleProductPage(pageWithAdHandler);
+    loginSignUp = new LoginSignUpPage(pageWithAdHandler);
+    mainPage = new MainPage(pageWithAdHandler);
+    cartPage = new CartPage(pageWithAdHandler);
     const emailGenerator = new EmailGenerator();
     email = emailGenerator.generateEmail();
 
-    await page.goto('/');
+    await pageWithAdHandler.goto('/');
     
-    if (await mainPage.popupButton.isVisible())
-       {
-          await mainPage.popupButton.click();
-       }
   });
 
-  test('Entry to the product page', async ({ page }) => {
+  test('Entry to the product page', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
     await productPage.viewProduct1.click();
 
     //Assert
-    await expect(page).toHaveURL(
+    await expect(pageWithAdHandler).toHaveURL(
       'https://www.automationexercise.com/product_details/1',
     );
   });
 
-  test('Change quantity products and add to cart', async () => {;
+  test('Change quantity products and add to cart', async ({ pageWithAdHandler }) => {
   //Arrange
   const quantity = '12'
   await productPage.viewProduct1.click();
@@ -59,7 +55,7 @@ test.describe('Product page', () => {
   await expect(cartPage.quantityLabel).toHaveText(quantity);
 });
 
-  test('Add review to product (successful)', async () => {
+  test('Add review to product (successful)', async ({pageWithAdHandler}) => {
     //Arrange
     await productPage.viewProduct1.click();
 
@@ -77,7 +73,7 @@ test.describe('Product page', () => {
     );
   });
 
-  test('Add review to product (unsuccessful) - Empty name', async () => {
+  test('Add review to product (unsuccessful) - Empty name', async ({pageWithAdHandler}) => {
     //Arrange
     const emptyName = '';
     await productPage.viewProduct1.click();
@@ -100,7 +96,7 @@ test.describe('Product page', () => {
     await expect(validationMessage).toContain(loginSignUp.valueMissingMessage);
   });
 
-  test('Add review to product (unsuccessful) - Empty email', async () => {
+  test('Add review to product (unsuccessful) - Empty email', async ({pageWithAdHandler}) => {
     //Arrange
     const emptyEmail = '';
     await productPage.viewProduct1.click();
@@ -123,7 +119,7 @@ test.describe('Product page', () => {
     await expect(validationMessage).toContain(loginSignUp.valueMissingMessage);
   });
 
-  test('Add review to product (unsuccessful) - Empty review', async () => {
+  test('Add review to product (unsuccessful) - Empty review', async ({pageWithAdHandler}) => {
     //Arrange
     const emptyReview = '';
     await productPage.viewProduct1.click();
@@ -137,7 +133,7 @@ test.describe('Product page', () => {
     await singleProductPage.submitButton.click();
 
     //Assert
-    const validationMessage = await singleProductPage.reiewInput.evaluate(
+    const validationMessage = await singleProductPage.reviewInput.evaluate(
       (element) => {
         const input = element as HTMLInputElement;
         return input.validationMessage;

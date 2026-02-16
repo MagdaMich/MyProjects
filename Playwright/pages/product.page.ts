@@ -20,7 +20,7 @@ export class ProductPage {
     const selector = `.features_items .productinfo .btn[data-product-id="${productNumber}"]`;
     return selector;
   };
-  product1 = this.page.locator(this.selectorProduct(1));
+  product1 = this.page.getByText('Add to cart').nth(1);
   viewProduct1 = this.page.locator('.choose > .nav > li > a').first();
   product4 = this.page.locator(this.selectorProduct(4));
   product15 = this.page.locator(this.selectorProduct(15));

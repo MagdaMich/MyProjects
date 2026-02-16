@@ -1,4 +1,7 @@
 ## Repository Magdelena Michalska
+
+Each project in this repository has its own dedicated GitHub Actions pipeline.
+
 This repository present automated tests for website:
 
 > https://www.automationexercise.com. 
@@ -11,11 +14,13 @@ The project includes both **xUnit** and **Reqnroll** (BDD) tests written in **C#
 Test reports are generated using Allure, but only for Reqnroll scenarios. 
 
 [![Allure Report](https://img.shields.io/badge/Allure%20Report-View%20Test%20Results-blueviolet?style=for-the-badge&logo=allure)](https://magdamich.github.io/MyProjects/)
+
 > https://reqres.in/
 
 The repository contains API tests implemented in **RestSharp**  with **SpecFlow** using the public API on the page (Currently, the workflow for RestSharp has failed because the reqres.in website has changed, and I’m working on updating those tests)
 
-Each project in this repository has its own dedicated GitHub Actions pipeline.
+> [!NOTE]
+> This repository demonstrates the architecture of API automated tests. Due to recent changes and paywalls introduced by the public API provider (ReqRes.in), the CI/CD pipeline has been moved to the `dev` branch to maintain a clean status on `main`. The code remains a valid showcase of RestSharp and SpecFlow implementation.
 
 ## How to run tests in frameworks:
 

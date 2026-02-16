@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { loginData } from '../test-data/login.data';
 import { SignUpPage } from '../pages/signUp.page';
 import { LoginSignUpPage } from '../pages/loginSignUp.page';
@@ -9,25 +9,21 @@ test.describe('Delete account', () => {
   let loginSignUpPage: LoginSignUpPage;
   let signUpPage: SignUpPage;
   let mainPage: MainPage;
-  let email;
+  let email: string;
   const userId = loginData.userId;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ pageWithAdHandler }) => {
     const emailGenerator = new EmailGenerator();
     email = emailGenerator.generateEmail();
-    loginSignUpPage = new LoginSignUpPage(page);
-    signUpPage = new SignUpPage(page);
-    mainPage = new MainPage(page);
+    loginSignUpPage = new LoginSignUpPage(pageWithAdHandler);
+    signUpPage = new SignUpPage(pageWithAdHandler);
+    mainPage = new MainPage(pageWithAdHandler);
 
-    await page.goto('/');
+    await pageWithAdHandler.goto('/');
     
-    if (await mainPage.popupButton.isVisible())
-       {
-          await mainPage.popupButton.click();
-       }
   });
 
-  test('Delete account (succesfull)', async () => {
+  test('Delete account (succesfull)', async ({ pageWithAdHandler }) => {
     // Arrange
     const password = loginData.userPassword;
 

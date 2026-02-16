@@ -10,7 +10,7 @@ export class SingleProductPage {
   addToCartButton = this.page.getByRole('button', { name: ' Add to cart' });
   nameInput = this.page.locator('#name');
   emailInput = this.page.locator('#email');
-  reiewInput = this.page.locator('#review');
+  reviewInput = this.page.locator('#review');
   name: string = 'User';
   review: string = 'New test review'; 
   submitButton = this.page.getByRole('button', { name: 'Submit' });
@@ -24,6 +24,6 @@ export class SingleProductPage {
     ): Promise<void> {
     await this.nameInput.fill(name);
     await this.emailInput.fill(email);
-    await this.reiewInput.fill(review);
+    await this.reviewInput.fill(review);
   }
 }

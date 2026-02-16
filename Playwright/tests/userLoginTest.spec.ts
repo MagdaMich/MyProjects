@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { loginData } from '../test-data/login.data';
 import { SignUpPage } from '../pages/signUp.page';
 import { LoginSignUpPage } from '../pages/loginSignUp.page';
@@ -9,28 +9,23 @@ test.describe('User Login page', () => {
   let loginSignUpPage: LoginSignUpPage;
   let signUpPage: SignUpPage;
   let mainPage: MainPage;
-  let email;
+  let email: string;
   const userId = loginData.userId;
   const password = loginData.userPassword;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ pageWithAdHandler }) => {
     const emailGenerator = new EmailGenerator();
     email = emailGenerator.generateEmail();
-    loginSignUpPage = new LoginSignUpPage(page);
-    signUpPage = new SignUpPage(page);
-    mainPage = new MainPage(page);
+    loginSignUpPage = new LoginSignUpPage(pageWithAdHandler);
+    signUpPage = new SignUpPage(pageWithAdHandler);
+    mainPage = new MainPage(pageWithAdHandler);
 
-    await page.goto('/');
+    await pageWithAdHandler.goto('/');
 
-    if (await mainPage.popupButton.isVisible())
-       {
-          await mainPage.popupButton.click();
-       }
-       
     await loginSignUpPage.topNavigationBar.signupLoginLink.click();
   });
 
-  test('Sign in (successful)', async () => {
+  test('Sign in (successful)', async ({ pageWithAdHandler }) => {
     //Arrange
     await loginSignUpPage.singUp(userId, email);
     await signUpPage.singUpSuccefull(
@@ -66,7 +61,7 @@ test.describe('User Login page', () => {
     await signUpPage.continueButton.click();
   });
   
-  test('Sign in (unsuccessful) - Uncorrect email', async () => {
+  test('Sign in (unsuccessful) - Uncorrect email', async ({ pageWithAdHandler }) => {
     //Arrange
     const uncorrectEmail = 'user@gmail.com';
 
@@ -78,7 +73,7 @@ test.describe('User Login page', () => {
       loginSignUpPage.errorMessageText);
   });
 
-  test('Sign in (unsuccessful) - Empty password', async () => {
+  test('Sign in (unsuccessful) - Empty password', async ({ pageWithAdHandler }) => {
     //Arrange
     const emptyPassword = '';
 
@@ -92,7 +87,7 @@ test.describe('User Login page', () => {
     );
   });
 
-  test('Sign in (unsuccessful) - Uncorrect password', async () => {
+  test('Sign in (unsuccessful) - Uncorrect password', async ({ pageWithAdHandler }) => {
     //Arrange
     const uncorrectPassword = 'user';
 

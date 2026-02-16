@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { loginData } from '../test-data/login.data';
 import { SignUpPage } from '../pages/signUp.page';
 import { LoginSignUpPage } from '../pages/loginSignUp.page';
@@ -17,38 +17,39 @@ test.describe('Checkout user not login', () => {
   let productPage: ProductPage;
   let checkoutPage: CheckoutPage;
   let paymentPage: PaymentPage;
-  let email;
+  let email: string;
   const userId = loginData.userId;
   const password = loginData.userPassword;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ pageWithAdHandler }) => {
     const emailGenerator = new EmailGenerator();
     email = emailGenerator.generateEmail();
-    loginSignUpPage = new LoginSignUpPage(page);
-    signUpPage = new SignUpPage(page);
-    mainPage = new MainPage(page);
-    cartPage = new CartPage(page);
-    productPage = new ProductPage(page);
-    checkoutPage = new CheckoutPage(page);
-    paymentPage = new PaymentPage(page);
+    loginSignUpPage = new LoginSignUpPage(pageWithAdHandler);
+    signUpPage = new SignUpPage(pageWithAdHandler);
+    mainPage = new MainPage(pageWithAdHandler);
+    cartPage = new CartPage(pageWithAdHandler);
+    productPage = new ProductPage(pageWithAdHandler);
+    checkoutPage = new CheckoutPage(pageWithAdHandler);
+    paymentPage = new PaymentPage(pageWithAdHandler);
 
-    await page.goto('/');
+    await pageWithAdHandler.goto('/');
     
-    if (await mainPage.popupButton.isVisible())
-       {
-          await mainPage.popupButton.click();
-       }
   });
 
-  test.afterEach(async () => {
-    await signUpPage.topNavigationBar.deleteAccountLink.click();
-    await signUpPage.continueButton.click();
+  test.afterEach(async ({ pageWithAdHandler }) => {
+    try {
+      await signUpPage.topNavigationBar.deleteAccountLink.click();
+      await signUpPage.continueButton.click({ force: true, timeout: 3000 });
+    } catch (error) {
+      console.log('Delete account cleanup failed:', error);
+    }
   });
 
-  test('Proceed to checkout and register user', async () => {
+  test('Proceed to checkout and register user', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
+    await productPage.product15.waitFor({ state: 'visible', timeout: 5000 });
     await productPage.product15.click();
     await mainPage.vievCartLink.click();
     await cartPage.proceedToCheckoutButton.click();
@@ -78,10 +79,11 @@ test.describe('Checkout user not login', () => {
     await signUpPage.continueButton.click();
   });
 
-  test('Add to cart then register user and buy', async () => {
+  test('Add to cart then register user and buy', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
+    await productPage.product15.waitFor({ state: 'visible', timeout: 5000 });
     await productPage.product15.click();
     await mainPage.vievCartLink.click();
     await cartPage.proceedToCheckoutButton.click();

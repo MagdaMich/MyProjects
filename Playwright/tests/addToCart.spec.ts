@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { loginData } from '../test-data/login.data';
 import { SignUpPage } from '../pages/signUp.page';
 import { LoginSignUpPage } from '../pages/loginSignUp.page';
@@ -13,26 +13,21 @@ test.describe('Add product to cart', () => {
   let cartPage: CartPage;
   let signUpPage: SignUpPage;
   let productPage: ProductPage;
-  let email;
+  let email: string;
   const userId = loginData.userId;
   const password = loginData.userPassword;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ pageWithAdHandler }) => {
     const emailGenerator = new EmailGenerator();
     email = emailGenerator.generateEmail();
-    loginSignUpPage = new LoginSignUpPage(page);
-    signUpPage = new SignUpPage(page);
-    mainPage = new MainPage(page);
-    cartPage = new CartPage(page);
-    productPage = new ProductPage(page);
+    loginSignUpPage = new LoginSignUpPage(pageWithAdHandler);
+    signUpPage = new SignUpPage(pageWithAdHandler);
+    mainPage = new MainPage(pageWithAdHandler);
+    cartPage = new CartPage(pageWithAdHandler);
+    productPage = new ProductPage(pageWithAdHandler);
 
-    await page.goto('/');
+    await pageWithAdHandler.goto('/');
     
-    if (await mainPage.popupButton.isVisible())
-       {
-          await mainPage.popupButton.click();
-       }
-
     await loginSignUpPage.singUp(userId, email);
     await signUpPage.singUpSuccefull(
       password,
@@ -52,12 +47,16 @@ test.describe('Add product to cart', () => {
     await signUpPage.continueButton.click();
   });
 
-  test.afterEach(async () => {
-    await signUpPage.topNavigationBar.deleteAccountLink.click();
-    await signUpPage.continueButton.click();
+  test.afterEach(async ({ pageWithAdHandler }) => {
+    try {
+      await signUpPage.topNavigationBar.deleteAccountLink.click();
+      await signUpPage.continueButton.click({ force: true, timeout: 3000 });
+    } catch (error) {
+      console.log('Delete account cleanup failed:', error);
+    }
   });
 
-  test('Add one products to cart', async () => {
+  test('Add one products to cart', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -69,7 +68,7 @@ test.describe('Add product to cart', () => {
     await mainPage.continueShopping.click();
   });
 
-  test('Add 3 products to cart', async () => {
+  test('Add 3 products to cart', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -84,7 +83,7 @@ test.describe('Add product to cart', () => {
     await expect(cartPage.textLabel).toHaveText(cartPage.shoppingCartText);
   });
 
-  test('Add products to cart by category', async () => {
+  test('Add products to cart by category', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -107,7 +106,7 @@ test.describe('Add product to cart', () => {
     await expect(cartPage.countCartProduct).toHaveCount(3);
   });
 
-  test('Add products to cart by brands', async () => {
+  test('Add products to cart by brands', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -130,7 +129,7 @@ test.describe('Add product to cart', () => {
     //Asert
     await expect(cartPage.countCartProduct).toHaveCount(4);
   });
-  test('Add 10 the same products', async () => {
+  test('Add 10 the same products', async ({ pageWithAdHandler }) => {
     //Arrange
     const quantity: number = 10;
 

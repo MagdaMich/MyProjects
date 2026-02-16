@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { loginData } from '../test-data/login.data';
 import { ContactUs } from '../pages/contactUs.page';
 import { EmailGenerator } from '../test-data/emailGenerator';
@@ -9,27 +9,22 @@ test.describe('Contact us page', () => {
   let contactUs: ContactUs;
   let loginSignUp: LoginSignUpPage;
   let mainPage: MainPage;
-  let email;
+  let email: string;
   const userId = loginData.userId;
 
-  test.beforeEach(async ({ page }) => {
-    contactUs = new ContactUs(page);
-    loginSignUp = new LoginSignUpPage(page);
-    mainPage = new MainPage(page);
+  test.beforeEach(async ({ pageWithAdHandler }) => {
+    contactUs = new ContactUs(pageWithAdHandler);
+    loginSignUp = new LoginSignUpPage(pageWithAdHandler);
+    mainPage = new MainPage(pageWithAdHandler);
     const emailGenerator = new EmailGenerator();
     email = emailGenerator.generateEmail();
 
-    await page.goto('/');
+    await pageWithAdHandler.goto('/');
 
-    if (await mainPage.popupButton.isVisible())
-       {
-          await mainPage.popupButton.click();
-       }
-       
     await contactUs.topNavigationBar.contactUsLink.click();
   });
 
-  test('Send message (successful) - Full form', async () => {
+  test('Send message (successful) - Full form', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -44,7 +39,7 @@ test.describe('Contact us page', () => {
     await expect(contactUs.messageLabel).toHaveText(contactUs.messageText);
   });
 
-  test('Send message (unsuccessful) - Empty form', async () => {
+  test('Send message (unsuccessful) - Empty form', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -64,7 +59,7 @@ test.describe('Contact us page', () => {
     );
   });
 
-  test('Send message (unsuccessful) - Form without email', async () => {
+  test('Send message (unsuccessful) - Form without email', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -89,7 +84,7 @@ test.describe('Contact us page', () => {
 
   });
 
-  test('Send message (successful) - Form only with email', async () => {
+  test('Send message (successful) - Form only with email', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act

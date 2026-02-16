@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { ProductPage } from '../pages/product.page';
 import { MainPage } from '../pages/main.page';
 
@@ -6,21 +6,16 @@ test.describe('Search product in product page', () => {
   let productPage: ProductPage;
   let mainPage: MainPage;
 
-  test.beforeEach(async ({ page }) => {
-    productPage = new ProductPage(page);
-    mainPage = new MainPage(page);
+  test.beforeEach(async ({ pageWithAdHandler }) => {
+    productPage = new ProductPage(pageWithAdHandler);
+    mainPage = new MainPage(pageWithAdHandler);
 
-    await page.goto('/');
+    await pageWithAdHandler.goto('/');
     
-    if (await mainPage.popupButton.isVisible())
-       {
-          await mainPage.popupButton.click();
-       }
-
     await productPage.topNavigationBar.productLink.click();
   });
 
-  test('Search product (successful)', async () => {
+  test('Search product (successful)', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -31,7 +26,7 @@ test.describe('Search product in product page', () => {
     await expect(productPage.productTextLabel).toHaveText(productPage.productText);
   });
 
-  test('Search product (unsuccessful)', async () => {
+  test('Search product (unsuccessful)', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act

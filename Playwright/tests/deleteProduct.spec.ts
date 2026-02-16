@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { loginData } from '../test-data/login.data';
 import { SignUpPage } from '../pages/signUp.page';
 import { LoginSignUpPage } from '../pages/loginSignUp.page';
@@ -17,21 +17,16 @@ test.describe('Delete product from the cart', () => {
   const userId = loginData.userId;
   const password = loginData.userPassword;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ pageWithAdHandler }) => {
     const emailGenerator = new EmailGenerator();
     email = emailGenerator.generateEmail();
-    loginSignUpPage = new LoginSignUpPage(page);
-    signUpPage = new SignUpPage(page);
-    mainPage = new MainPage(page);
-    cartPage = new CartPage(page);
-    productPage = new ProductPage(page);
+    loginSignUpPage = new LoginSignUpPage(pageWithAdHandler);
+    signUpPage = new SignUpPage(pageWithAdHandler);
+    mainPage = new MainPage(pageWithAdHandler);
+    cartPage = new CartPage(pageWithAdHandler);
+    productPage = new ProductPage(pageWithAdHandler);
 
-    await page.goto('/');
-    
-    if (await mainPage.popupButton.isVisible())
-       {
-          await mainPage.popupButton.click();
-       }
+    await pageWithAdHandler.goto('/');
 
     await loginSignUpPage.singUp(userId, email);
     await signUpPage.singUpSuccefull(
@@ -52,12 +47,16 @@ test.describe('Delete product from the cart', () => {
     await signUpPage.continueButton.click();
   });
 
-  test.afterEach(async () => {
-    await signUpPage.topNavigationBar.deleteAccountLink.click();
-    await signUpPage.continueButton.click();
+  test.afterEach(async ({pageWithAdHandler}) => {
+     try {
+      await signUpPage.topNavigationBar.deleteAccountLink.click();
+      await signUpPage.continueButton.click({ force: true, timeout: 3000 });
+    } catch (error) {
+      console.log('Delete account cleanup failed:', error);
+    }
   });
 
-  test('Delete produt', async () => {
+  test('Delete produt', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -69,7 +68,7 @@ test.describe('Delete product from the cart', () => {
     await expect(cartPage.emptyCart).toHaveText(cartPage.emptyCartText);
   });
 
-  test('Delete product and continue shopping', async () => {
+  test('Delete product and continue shopping', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -82,7 +81,7 @@ test.describe('Delete product from the cart', () => {
     await expect(productPage.topNavigationBar.productLink).toBeEnabled();
   });
 
-  test('Delete 10 the same products', async () => {
+  test('Delete 10 the same products', async ({ pageWithAdHandler }) => {
     //Arrange
     const quantity: number = 10;
     await productPage.sideMenu.women.click();
@@ -101,7 +100,7 @@ test.describe('Delete product from the cart', () => {
     await expect(cartPage.emptyCart).toHaveText(cartPage.emptyCartText);
   });
 
-  test('Delete 3 products', async () => {
+  test('Delete 3 products', async ({ pageWithAdHandler }) => {
     //Arrange
     await productPage.sideMenu.women.click();
     await productPage.sideMenu.womenDress.click();

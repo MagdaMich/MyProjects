@@ -15,7 +15,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
-  timeout: 5 * 60 * 1000,
+  timeout: 5 * 30 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -49,9 +49,6 @@ export default defineConfig({
     screenshot: 'on',
     video: 'retain-on-failure',
     headless: true,
-    launchOptions: {
-    args: ['--no-sandbox'],
-  }
   },
 
   /* Configure projects for major browsers */
@@ -69,7 +66,6 @@ export default defineConfig({
            testIdAttribute: 'data-qa', 
            }
       },
-
 
     // {
     //   name: 'firefox',

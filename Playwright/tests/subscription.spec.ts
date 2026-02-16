@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { BottomNavigation } from '../components/bottomNavigation.components';
 import { EmailGenerator } from '../test-data/emailGenerator';
 import { LoginSignUpPage } from '../pages/loginSignUp.page';
@@ -9,20 +9,16 @@ test.describe('Subscription', () => {
   let loginSignUp: LoginSignUpPage;
   let mainPage: MainPage;
 
-  test.beforeEach(async ({ page }) => {
-    bottomNavigation = new BottomNavigation(page);
-    loginSignUp = new LoginSignUpPage(page);
-    mainPage = new MainPage(page)
+  test.beforeEach(async ({ pageWithAdHandler }) => {
+    bottomNavigation = new BottomNavigation(pageWithAdHandler);
+    loginSignUp = new LoginSignUpPage(pageWithAdHandler);
+    mainPage = new MainPage(pageWithAdHandler)
 
-    await page.goto('/');
+    await pageWithAdHandler.goto('/');
     
-    if (await mainPage.popupButton.isVisible())
-       {
-          await mainPage.popupButton.click();
-       }
   });
 
-  test('Send subscription (successful)', async () => {
+  test('Send subscription (successful)', async ({ pageWithAdHandler }) => {
     //Arrange
     const emailGenerator = new EmailGenerator();
     const email = emailGenerator.generateEmail();
@@ -35,7 +31,7 @@ test.describe('Subscription', () => {
     await expect(bottomNavigation.messageSentLabel).toHaveText(bottomNavigation.messageSentText);
   });
 
-  test('Send subscription (unsuccessful) - Not full email', async () => {
+  test('Send subscription (unsuccessful) - Not full email', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -50,7 +46,7 @@ test.describe('Subscription', () => {
     );
   });
 
-  test('Send subscription (unsuccessful) - Empty input', async () => {
+  test('Send subscription (unsuccessful) - Empty input', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act

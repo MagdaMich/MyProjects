@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { loginData } from '../test-data/login.data';
 import { SignUpPage } from '../pages/signUp.page';
 import { LoginSignUpPage } from '../pages/loginSignUp.page';
@@ -21,24 +21,19 @@ test.describe('Proceed to checkout', () => {
   const userId = loginData.userId;
   const password = loginData.userPassword;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ pageWithAdHandler }) => {
     const emailGenerator = new EmailGenerator();
     email = emailGenerator.generateEmail();
-    loginSignUpPage = new LoginSignUpPage(page);
-    signUpPage = new SignUpPage(page);
-    mainPage = new MainPage(page);
-    cartPage = new CartPage(page);
-    productPage = new ProductPage(page);
-    checkoutPage = new CheckoutPage(page);
-    paymentPage = new PaymentPage(page);
+    loginSignUpPage = new LoginSignUpPage(pageWithAdHandler);
+    signUpPage = new SignUpPage(pageWithAdHandler);
+    mainPage = new MainPage(pageWithAdHandler);
+    cartPage = new CartPage(pageWithAdHandler);
+    productPage = new ProductPage(pageWithAdHandler);
+    checkoutPage = new CheckoutPage(pageWithAdHandler);
+    paymentPage = new PaymentPage(pageWithAdHandler);
 
-    await page.goto('/');
+    await pageWithAdHandler.goto('/');
     
-    if (await mainPage.popupButton.isVisible())
-       {
-          await mainPage.popupButton.click();
-       }
-
     await loginSignUpPage.singUp(userId, email);
     await signUpPage.singUpSuccefull(
       password,
@@ -57,16 +52,21 @@ test.describe('Proceed to checkout', () => {
     );
     await signUpPage.continueButton.click();
 
+    await productPage.product15.waitFor({ state: 'visible', timeout: 5000 });
     await productPage.product15.click();
     await mainPage.vievCartLink.click();
   });
 
-  test.afterEach(async () => {
-    await signUpPage.topNavigationBar.deleteAccountLink.click();
-    await signUpPage.continueButton.click();
+  test.afterEach(async ({ pageWithAdHandler }) => {
+    try {
+      await signUpPage.topNavigationBar.deleteAccountLink.click();
+      await signUpPage.continueButton.click({ force: true, timeout: 3000 });
+    } catch (error) {
+      console.log('Delete account cleanup failed:', error);
+    }
   });
 
-  test('Proceed to checkout and check my product', async () => {
+  test('Proceed to checkout and check my product', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -76,7 +76,7 @@ test.describe('Proceed to checkout', () => {
     await expect(cartPage.textLabel).toHaveText(cartPage.checkoutText);
   });
 
-  test('Place order (successfull)', async () => {
+  test('Place order (successfull)', async ({ pageWithAdHandler }) => {
     //Arrange
 
     //Act
@@ -102,7 +102,7 @@ test.describe('Proceed to checkout', () => {
     await paymentPage.continueButton.click();
   });
 
-  test('Place order (unsuccessfull) - Empty name of card', async () => {
+  test('Place order (unsuccessfull) - Empty name of card', async ({ pageWithAdHandler }) => {
     //Arrange
     const nameOfCardEmpty = '';
 
