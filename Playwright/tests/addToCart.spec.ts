@@ -50,9 +50,11 @@ test.describe('Add product to cart', () => {
   test.afterEach(async ({ pageWithAdHandler }) => {
     try {
       await signUpPage.topNavigationBar.deleteAccountLink.click();
-      await signUpPage.continueButton.click({ force: true, timeout: 3000 });
+      await signUpPage.continueButton.dispatchEvent('click');
+
+      console.log('Cleanup: Continue clicks dispatchEvent.')
     } catch (error) {
-      console.log('Delete account cleanup failed:', error);
+      console.log('Cleanup; Continue does not work', error);
     }
   });
 
@@ -60,7 +62,8 @@ test.describe('Add product to cart', () => {
     //Arrange
 
     //Act
-    await productPage.product1.click();
+    await productPage.product1.scrollIntoViewIfNeeded();
+    await productPage.product1.dispatchEvent('click');
 
     //Asert
     await expect(mainPage.messageAddLabel).toHaveText(mainPage.messageAddText);
@@ -72,7 +75,7 @@ test.describe('Add product to cart', () => {
     //Arrange
 
     //Act
-    await productPage.product1.click();
+    await productPage.product1.dispatchEvent('click');
     await mainPage.continueShopping.click();
     await productPage.product4.click();
     await mainPage.continueShopping.click();

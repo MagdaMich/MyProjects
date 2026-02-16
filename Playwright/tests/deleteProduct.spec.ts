@@ -60,7 +60,7 @@ test.describe('Delete product from the cart', () => {
     //Arrange
 
     //Act
-    await productPage.product1.click();
+    await productPage.product1.dispatchEvent('click');
     await mainPage.vievCartLink.click();
     await cartPage.deleteProduct.click();
 
@@ -72,7 +72,7 @@ test.describe('Delete product from the cart', () => {
     //Arrange
 
     //Act
-    await productPage.product1.click();
+    await productPage.product1.dispatchEvent('click');
     await mainPage.vievCartLink.click();
     await cartPage.deleteProduct.click();
     await cartPage.clickHereLink.click();

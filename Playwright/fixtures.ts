@@ -8,32 +8,24 @@ export const test = base.extend<AdFixtures>({
   pageWithAdHandler: async ({ page }, use) => {
     
     const dismissAds = async () => {
-      try {
-        // TWOJA DZIAŁAJĄCA LOGIKA - wstawiona bezpośrednio tutaj
-        // Uwaga: używamy dokładnego selektora, który u Ciebie działał
-        const popupButton = page.locator("//p [text()='Consent']");
-        
-        if (await popupButton.isVisible({ timeout: 1000 }).catch(() => false)) {
-          await popupButton.click().catch(() => {});
-        }
+  try {
+    const popupButton = page.locator("//p [text()='Consent']");
+    const closeButton = page.locator("button[aria-label='Close'], .close-btn").first();
 
-        // Dodatkowo: generic close button dla innych reklam (opcjonalnie)
-        const closeButton = page.locator("button[aria-label='Close'], .close-btn").first();
-        if (await closeButton.isVisible({ timeout: 500 }).catch(() => false)) {
-          await closeButton.click().catch(() => {});
-        }
-      } catch (e) {
-        // Ignoruj błędy tła
-      }
-    };
+    if (await popupButton.count() > 0) {
+      await popupButton.click({ timeout: 1000 }).catch(() => {});
+    }
 
-    // 1. Spróbuj zamknąć od razu
+    if (await closeButton.count() > 0) {
+      await closeButton.click({ timeout: 1000 }).catch(() => {});
+    }
+  } catch (e) {
+  }
+};
     await dismissAds();
 
-    // 2. Ustaw interwał, ale skróć go do 1 sekundy, żeby szybciej reagował
     const adInterval = setInterval(dismissAds, 1000);
 
-    // 3. Reaguj na nawigację
     page.on('framenavigated', () => dismissAds());
 
     await use(page);
