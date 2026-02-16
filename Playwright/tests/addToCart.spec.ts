@@ -50,6 +50,9 @@ test.describe('Add product to cart', () => {
   test.afterEach(async ({ pageWithAdHandler }) => {
     try {
       await signUpPage.topNavigationBar.deleteAccountLink.click();
+
+      await pageWithAdHandler.waitForURL('**/delete_account', { timeout: 2000 }).catch(() => {});
+      
       await signUpPage.continueButton.dispatchEvent('click');
 
       console.log('Cleanup: Continue clicks dispatchEvent.')
@@ -97,7 +100,7 @@ test.describe('Add product to cart', () => {
 
     await productPage.sideMenu.men.click();
     await productPage.sideMenu.menJeans.click();
-    await productPage.product35Men.click();
+    await productPage.product35Men.dispatchEvent('click');
     await mainPage.continueShopping.click();
 
     await productPage.sideMenu.kids.click();
