@@ -10,8 +10,7 @@ This repository present automated tests for website:
 The project includes both **xUnit** and **Reqnroll** (BDD) tests written in **C#** with **Selenium**.
 Test reports are generated using Allure, but only for Reqnroll scenarios. 
 
-View report: https://magdamich.github.io/MyProjects/
-
+[![Allure Report](https://img.shields.io/badge/Allure%20Report-View%20Test%20Results-blueviolet?style=for-the-badge&logo=allure)](https://magdamich.github.io/MyProjects/)
 > https://reqres.in/
 
 The repository contains API tests implemented in **RestSharp**  with **SpecFlow** using the public API on the page (Currently, the workflow for RestSharp has failed because the reqres.in website has changed, and I’m working on updating those tests)

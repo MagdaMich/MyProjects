@@ -2,9 +2,9 @@ name: Reqnroll Tests with Allure
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ main ]
   pull_request:
-    branches: [ dev ]
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
