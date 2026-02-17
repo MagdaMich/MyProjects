@@ -48,7 +48,7 @@ test.describe('Add product to cart', () => {
   });
 
   test.afterEach(async ({ pageWithAdHandler }) => {
-      await signUpPage.topNavigationBar.deleteAccountLink.click();
+      await signUpPage.topNavigationBar.deleteAccountLink.click().catch(() => {});
 
   });
 
