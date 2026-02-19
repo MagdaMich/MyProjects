@@ -1,0 +1,8 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","8987","UC-3 Test - Login form with credentials by passing Username & Password","","Thu Feb 19 15:14:51 UTC 2026","passed","Thu Feb 19 15:15:00 UTC 2026","","","",""
+"","5861","UC-3 Test - Login form with credentials by passing Username & Password","","Thu Feb 19 15:15:03 UTC 2026","passed","Thu Feb 19 15:15:08 UTC 2026","","","",""
+"","977","UC-3 Test - Login form with credentials by passing Username & Password","","Thu Feb 19 15:15:09 UTC 2026","passed","Thu Feb 19 15:15:10 UTC 2026","","","",""
+"","1065","UC-3 Test - Login form with credentials by passing Username & Password","","Thu Feb 19 15:15:01 UTC 2026","passed","Thu Feb 19 15:15:02 UTC 2026","","","",""
+"","1033","UC-1 Test - Login form with empty credentials","","Thu Feb 19 15:15:11 UTC 2026","passed","Thu Feb 19 15:15:12 UTC 2026","","","",""
+"","903","UC-3 Test - Login form with credentials by passing Username & Password","","Thu Feb 19 15:15:02 UTC 2026","passed","Thu Feb 19 15:15:03 UTC 2026","","","",""
+"","1365","UC-2 Test - Login form with credentials by passing Username","","Thu Feb 19 15:15:10 UTC 2026","passed","Thu Feb 19 15:15:11 UTC 2026","","","",""
