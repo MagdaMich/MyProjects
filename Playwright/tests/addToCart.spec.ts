@@ -48,8 +48,12 @@ test.describe('Add product to cart', () => {
   });
 
   test.afterEach(async ({ pageWithAdHandler }) => {
-      await signUpPage.topNavigationBar.deleteAccountLink.click().catch(() => {});
-
+      try {
+      await signUpPage.topNavigationBar.deleteAccountLink.click();
+      await signUpPage.continueButton.click({ force: true, timeout: 3000 });
+    } catch (error) {
+      console.log('Delete account cleanup failed:', error);
+    }
   });
 
   test('Add one products to cart', async ({ pageWithAdHandler }) => {
