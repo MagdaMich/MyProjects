@@ -70,6 +70,7 @@ namespace SeleniumTests.StepDefinitions
         internal void UserIsRedirectedToTheMainPage()
         {
             _homePage.IsLoaded();
+            _homePage.ClickPopUpConsent();
         }
 
         [When(@"User clicks Logout")]
