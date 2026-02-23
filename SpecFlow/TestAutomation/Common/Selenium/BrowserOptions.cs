@@ -17,12 +17,19 @@ namespace Common.Selenium
             options.AddArgument("--disable-dev-shm-usage");
             options.AddArgument("--disable-notifications");
             options.AddArgument("--disable-popup-blocking");
+            options.AddArgument("--host-rules=" +
+    "MAP *.google-analytics.com 127.0.0.1, " +
+    "MAP *.googletagservices.com 127.0.0.1, " +
+    "MAP *.googlesyndication.com 127.0.0.1, " +
+    "MAP surveys.google.com 127.0.0.1, " +
+    "MAP *.googleads.g.doubleclick.net 127.0.0.1, " +
+    "MAP *.static.doubleclick.net 127.0.0.1");
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalOption("useAutomationExtension", false);
 
             if (Configuration.ConfigurationReader.GetConfiguration()!.Selenium!.Headless)
             {
-                options.AddArgument("--headless");
+                options.AddArgument("--headless=new");
                 options.AddArgument("--disable-gpu");
                 options.AddArgument("window-size=1920,1080");
             }

@@ -126,9 +126,7 @@ namespace SeleniumTests.StepDefinitions
         [When(@"User fills new email")]
         internal void UserFillsNewEmail()
         {
-            //string email = $"userExamples123+{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}@gmail.com";
             _signUpLogin.TypeNewEmail();
-            //_specFlowOutputHelper.WriteLine($"User email {}");
         }
 
         [When(@"User clicks Signup button")]

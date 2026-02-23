@@ -148,25 +148,41 @@ namespace SeleniumTests.PageObjectModels
             _driver.SwitchTo().DefaultContent();
 
             string killSurveysScript = @"
-        var ads = document.querySelectorAll('iframe, .google-survey, [id*=""survey""], [class*=""survey""]');
-        for (var i = 0; i < ads.Length; i++) {
-            ads[i].remove();
-        }
+        var selectors = ['iframe[src*=""google""]', '[id*=""survey""]', '[class*=""survey""]', '.widget-pane-container'];
+        selectors.forEach(sel => {
+            var elements = document.querySelectorAll(sel);
+            elements.forEach(el => {
+                console.log('TM Progres Janitor: Removing element ' + sel);
+                el.remove();
+            });
+        });
         document.body.style.overflow = 'auto';
-    ";
+        document.documentElement.style.overflow = 'auto';";
 
             try
             {
                 ((IJavaScriptExecutor)_driver).ExecuteScript(killSurveysScript);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine("INFO: Skrypt czyszczący nie znalazł elementów lub wystąpił błąd: " + ex.Message);
             }
 
-            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(15));
-            var element = wait.Until(d => d.FindElement(CommonSelectors.DeleteAccountLink));
+            try
+            {
+                var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(15));
+                wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
 
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
+                var element = wait.Until(d => d.FindElement(CommonSelectors.DeleteAccountLink));
+
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
+                Console.WriteLine("SUCCESS");
+            }
+            catch (WebDriverTimeoutException)
+            {
+                Console.WriteLine($"FATAL: {_driver.Url}");
+                throw;
+            }
         }
     }
 }
