@@ -40,7 +40,7 @@ namespace SeleniumTests.PageObjectModels
 
         internal void IsLoaded()
         {
-            EnsurePageIsLoaded(Url);
+            ClosePopupAndEnsurePageIsLoaded(Url);
         }
 
         internal void TypeEmailSubscription()

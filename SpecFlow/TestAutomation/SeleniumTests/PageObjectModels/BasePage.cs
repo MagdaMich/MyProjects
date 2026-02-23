@@ -47,7 +47,7 @@ namespace SeleniumTests.PageObjectModels
             return new ContactUsPage(_driver);
         }
 
-        internal void EnsurePageIsLoaded(string url)
+        internal void ClosePopupAndEnsurePageIsLoaded(string url)
         {
             try
             {

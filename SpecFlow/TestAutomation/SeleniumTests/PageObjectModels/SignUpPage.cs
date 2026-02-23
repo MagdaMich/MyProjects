@@ -35,7 +35,7 @@ namespace SeleniumTests.PageObjectModels
 
         internal void IsLoaded()
         {
-            EnsurePageIsLoaded(Url);
+            ClosePopupAndEnsurePageIsLoaded(Url);
         }
 
         internal void ScroolOnTheBottomPage()
@@ -125,12 +125,12 @@ namespace SeleniumTests.PageObjectModels
 
         internal void IsLoadedAccountCreation()
         {
-            EnsurePageIsLoaded(UrlAccountCreate);
+            ClosePopupAndEnsurePageIsLoaded(UrlAccountCreate);
         }
 
         internal void IsLoadedAccountDeleted()
         {
-            EnsurePageIsLoaded(UrlAccountDeleted);
+            ClosePopupAndEnsurePageIsLoaded(UrlAccountDeleted);
         }
 
         internal void ClickContinueButton()
@@ -140,6 +140,7 @@ namespace SeleniumTests.PageObjectModels
 
         internal void ClikDeleteAccountLink()
         {
+            WaitUntilElementDisplayed(CommonSelectors.DeleteAccountLink);
             _driver.FindElement(CommonSelectors.DeleteAccountLink).Click();
         }
     }
