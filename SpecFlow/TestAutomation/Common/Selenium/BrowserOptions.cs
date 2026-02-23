@@ -15,6 +15,8 @@ namespace Common.Selenium
             options.AddArgument("--start-maximized");
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-dev-shm-usage");
+            options.AddArgument("--disable-notifications");
+            options.AddArgument("--disable-popup-blocking");
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalOption("useAutomationExtension", false);
 
