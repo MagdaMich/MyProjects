@@ -34,6 +34,7 @@ test.describe('Search product in product page', () => {
     await productPage.searchButton.click();
 
     //Assert
-    await expect(productPage.noProductsMessage).toHaveText(productPage.noProductsText);
+    await expect(productPage.featuresItems).toBeVisible();
+    await expect(productPage.productInfoItems).toHaveCount(0);
   });
 });

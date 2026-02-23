@@ -19,6 +19,9 @@ export class ProductPage {
   noProductsMessage = this.page.getByText('No products are available matching your search');
   noProductsText = 'No products are available matching your search';
 
+  featuresItems = this.page.locator('.features_items');
+  productInfoItems = this.page.locator('.features_items .productinfo');
+
   selectorProduct(productNumber: number): string {
     const selector = `.features_items .productinfo .btn[data-product-id="${productNumber}"]`;
     return selector;
