@@ -154,7 +154,7 @@ Open report:
 or 
 
 📊 **Live Allure Report:**  
-https://magdakalucka.github.io/MyProjects/
+https://magdamich.github.io/MyProjects/
 
 ## 🧪 SpecFlow/ Selenium 
 

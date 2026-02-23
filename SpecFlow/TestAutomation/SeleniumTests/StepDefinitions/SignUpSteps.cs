@@ -10,9 +10,12 @@ namespace SeleniumTests.StepDefinitions
     {
         private readonly SignUpPage _signUp;
 
+        private readonly HomePage _homePage;
+
         internal SignUpSteps(WebDriverProvider webDriverProvider)
         {
             _signUp = new SignUpPage(webDriverProvider.Driver);
+            _homePage = new HomePage(webDriverProvider.Driver);
         }
 
         [Then(@"User is redirected to the signup page")]
@@ -83,6 +86,7 @@ namespace SeleniumTests.StepDefinitions
         [When(@"User clicks Delete Account link")]
         internal void UserClicksDeleteAccountLink()
         {
+            _homePage.ClickPopUpConsent();
             _signUp.ClikDeleteAccountLink();
         }
     }
