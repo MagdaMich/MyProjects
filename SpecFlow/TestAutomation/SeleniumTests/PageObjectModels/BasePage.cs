@@ -49,6 +49,16 @@ namespace SeleniumTests.PageObjectModels
 
         internal void EnsurePageIsLoaded(string url)
         {
+            try
+            {
+                WaitUntilElementDisplayed(HomePageSelectors.PopupConsentButton);
+                _driver.FindElement(HomePageSelectors.PopupConsentButton).Click();
+            }
+            catch
+            {
+                return;
+            }
+
             if (_driver.Url != url)
             {
                 throw new Exception($"Failed to load page. Page URL = '{_driver.Url}'");

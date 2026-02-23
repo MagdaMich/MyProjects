@@ -9,7 +9,11 @@
 
 ## 1. Executive Summary
 
-This document defines the comprehensive test plan for the Automation Exercise E-Commerce platform. The test plan covers end-to-end functional testing of critical user workflows including user registration, authentication, shopping cart management, product browsing, checkout processes, and customer support features. A total of **40 test cases** have been designed to ensure optimal application performance and user experience.
+This test plan defines the automated functional testing strategy for the Automation Exercise e-commerce platform.
+
+The primary goal is to verify core user workflows including authentication, product browsing, shopping cart operations, checkout process, and customer communication features.
+
+The testing strategy focuses on validating real user business scenarios rather than isolated UI components.
 
 ---
 
@@ -623,52 +627,23 @@ This document defines the comprehensive test plan for the Automation Exercise E-
 
 ---
 
-## 8. Test Data Requirements
+## 8. CI/CD Integration
 
-- Valid email addresses (generated dynamically)
-- User credentials
-- Product IDs
-- Payment card test data
-- Address information
+Tests are executed automatically using GitHub Actions workflows.
 
----
+Pipeline responsibilities:
 
-## 9. Sign-Off
+- Dependency restoration  
+- Project build verification  
+- Automated test execution  
+- Report generation  
+- Pipeline failure notification when tests fail  
 
-| Role | Name | Date | Signature |
-|------|------|------|-----------|
-| QA Lead | | | |
-| Development Manager | | | |
-| Project Manager | | | |
+Execution is optimized for CI environments using headless mode.
 
 ---
 
-## 11. Infrastructure & CI/CD Strategy
-
-### Automated Execution
-
-**CI/CD Integration**
-- Tests are integrated with GitHub Actions and triggered automatically on every push and pull request
-- Continuous integration ensures no code changes bypass test verification
-
-**Worker Configuration**
-- To ensure stability on CI environments with limited resources, execution is restricted to 1 worker (workers: 1)
-- Sequential execution prevents resource contention and race conditions
-- Optimizes memory usage and system stability
-
-**Retry Mechanism**
-- A 1-retry policy is implemented for the CI environment to mitigate potential network-related flakiness
-- Failed tests are automatically retried once before marking as failed
-- Reduces false negatives from transient network issues
-
-**Headless Mode**
-- Tests run in headless mode on CI to optimize performance and resource utilization
-- Reduces overhead by eliminating GUI rendering
-- Increases execution speed by approximately 30%
-
----
-
-## 12. Test Architecture & Clean Code
+## 9. Test Architecture & Clean Code
 
 ### Design Pattern
 
@@ -705,67 +680,7 @@ This document defines the comprehensive test plan for the Automation Exercise E-
 
 ---
 
-## 13. Reporting & Artifacts
-
-### Standard Reporting
-
-**HTML Reports**
-- Automated generation of Playwright HTML Reports after every execution
-- Reports are generated in `playwright-report/` directory
-- Includes test summaries, pass/fail statistics, and execution timeline
-- Accessible via: `npx playwright show-report`
-
-**Report Contents**
-- Test suite overview with pass/fail counts
-- Individual test details with timestamps
-- Test duration and performance metrics
-- Browser and OS information
-
-### Evidence Collection
-
-**Automatic Artifact Capture**
-- In the event of a test failure, the framework is configured to automatically collect artifacts:
-
-**Screenshots**
-- Captured at the exact moment of failure
-- GitHub Location: `test-results/[test-name]-chromium/`
-- Example Path: `test-results/addToCart-Add-product-to-cart-Add-one-products-to-cart-chromium/test-failed-1.png`
-- Full GitHub URL: `https://github.com/[username]/[repo-name]/blob/main/test-results/addToCart-Add-product-to-cart-Add-one-products-to-cart-chromium/test-failed-1.png`
-- Filename: `test-failed-[number].png`
-- Useful for quick visual diagnosis
-
-**Video Recordings**
-- Full execution video for visual debugging
-- GitHub Location: `test-results/[test-name]-chromium/`
-- Example Path: `test-results/searchProduct-Search-produ-f8793-earch-product-unsuccessful--chromium/video.webm`
-- Full GitHub URL: `https://github.com/[username]/[repo-name]/blob/main/test-results/searchProduct-Search-produ-f8793-earch-product-unsuccessful--chromium/video.webm`
-- Filename: `video.webm`
-- Captured only on failure to save storage space
-- Provides complete test execution timeline
-- Format: WebM (video format for web playback)
-
-**Playwright Trace**
-- Detailed .zip traces for deep-dive analysis of the execution timeline
-- GitHub Location: `test-results/[test-name]-chromium/trace.zip`
-- Example Path: `test-results/userLoginTest-User-Login-page-Sign-in-successful--chromium/trace.zip`
-- Full GitHub URL: `https://github.com/[username]/[repo-name]/blob/main/test-results/userLoginTest-User-Login-page-Sign-in-successful--chromium/trace.zip`
-- Contains DOM snapshots, network logs, console logs, timeline
-- Viewable via Trace Viewer: `npx playwright show-trace test-results/[test-folder]/trace.zip`
-- Enables root-cause analysis of complex failures
-
-**Error Context**
-- Detailed error context markdown file generated on failure
-- GitHub Location: `test-results/[test-name]-chromium/`
-- Example Path: `test-results/checkoutUserLogin-Proceed--12a3a-ut-Place-order-successfull--chromium/error-context.md`
-- Full GitHub URL: `https://github.com/[username]/[repo-name]/blob/main/test-results/checkoutUserLogin-Proceed--12a3a-ut-Place-order-successfull--chromium/error-context.md`
-- Filename: `error-context.md`
-- Contains page structure, accessibility tree, and error messages
-- Human-readable documentation of failure context
-- Viewable directly on GitHub with formatted markdown rendering
-
----
-
-## 14. Defect Management
+## 10. Defect Management
 
 ### Bug Tracking
 
@@ -805,53 +720,19 @@ Each bug report includes the following elements:
 - Affected feature or module
 - Impact assessment and frequency of occurrence
 
-### Severity Levels
-
-**Critical - Immediate Resolution Required**
-- **Focus Areas:** Payment Processing, User Authentication
-- **Impact:** Blocks core business functionality
-- **Response Time:** Within 4 hours
-- **Examples:** 
-  - Payment processing failure
-  - Login/Registration broken
-  - Account deletion not working
-
-**Major - High Priority**
-- **Focus Areas:** Cart Management, Checkout Process
-- **Impact:** Significant impact on user experience
-- **Response Time:** Within 1 business day
-- **Examples:**
-  - Products not adding to cart
-  - Checkout process halted
-  - Order placement failure
-
-**Minor - Standard Priority**
-- **Focus Areas:** UI Elements, Newsletter Subscription, Search
-- **Impact:** Cosmetic or non-critical functionality
-- **Response Time:** Within 1 week
-- **Examples:**
-  - UI text alignment issues
-  - Newsletter subscription message typo
-  - Search results sorting incorrect
-
 ---
 
-## 15. Test Maintenance & Updates
+## 11. Test Maintenance Strategy
 
 ### Locator Maintenance
-- Locators are reviewed quarterly or after UI changes
-- Failed tests due to broken locators are fixed within 24 hours
-- Page Object Model ensures minimal impact when locators change
 
-### Test Data Refresh
-- Test data is refreshed before each major release
-- Base test users are recreated monthly
-- Product catalog is synchronized with production
+- Locators are reviewed after UI changes
+- Broken locators are fixed promptly to maintain test stability
 
-### Documentation Updates
-- This test plan is reviewed and updated before each release cycle
-- New test cases are added as features are implemented
-- Deprecated test cases are archived and removed
+### Test Data Management
+
+- Test users are recreated periodically
+- Product catalog data is synchronized with application state
 
 ---
 

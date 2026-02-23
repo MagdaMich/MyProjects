@@ -18,7 +18,7 @@ Scenario: Sign in (successful)
 	Then User is redirected to the Signup / Login page
 
 @daily
-Scenario: Sign in (insuccessful) - Incorrect email
+Scenario: Sign in (unsuccessful) - Incorrect email
 	When User fills incorrect email and correct password in login fields
 	And User clicks Login button
 	Then User gets message about incorrect email
