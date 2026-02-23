@@ -141,7 +141,9 @@ namespace SeleniumTests.PageObjectModels
         internal void ClikDeleteAccountLink()
         {
             WaitUntilElementDisplayed(CommonSelectors.DeleteAccountLink);
-            _driver.FindElement(CommonSelectors.DeleteAccountLink).Click();
+            //_driver.FindElement(CommonSelectors.DeleteAccountLink).Click();
+            var element = _driver.FindElement(CommonSelectors.DeleteAccountLink);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
         }
     }
 }
