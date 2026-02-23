@@ -50,6 +50,7 @@ namespace SeleniumTests.PageObjectModels
 
         internal string GetIncorrectText()
         {
+            WaitUntilElementDisplayed(SignUpLoginSelectors.ErrorText);
             return _driver.FindElement(SignUpLoginSelectors.ErrorText).Text;
         }
 

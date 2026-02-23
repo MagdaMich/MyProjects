@@ -165,7 +165,7 @@ namespace SeleniumTests.PageObjectModels
             }
             catch (Exception ex)
             {
-                Console.WriteLine("INFO: Skrypt czyszczący nie znalazł elementów lub wystąpił błąd: " + ex.Message);
+                Console.WriteLine("INFO" + ex.Message);
             }
 
             try
