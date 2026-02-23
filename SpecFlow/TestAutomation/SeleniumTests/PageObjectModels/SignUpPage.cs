@@ -140,9 +140,32 @@ namespace SeleniumTests.PageObjectModels
 
         internal void ClikDeleteAccountLink()
         {
-            WaitUntilElementDisplayed(CommonSelectors.DeleteAccountLink);
+            //WaitUntilElementDisplayed(CommonSelectors.DeleteAccountLink);
             //_driver.FindElement(CommonSelectors.DeleteAccountLink).Click();
-            var element = _driver.FindElement(CommonSelectors.DeleteAccountLink);
+            //var element = _driver.FindElement(CommonSelectors.DeleteAccountLink);
+            //((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
+
+            _driver.SwitchTo().DefaultContent();
+
+            string killSurveysScript = @"
+        var ads = document.querySelectorAll('iframe, .google-survey, [id*=""survey""], [class*=""survey""]');
+        for (var i = 0; i < ads.Length; i++) {
+            ads[i].remove();
+        }
+        document.body.style.overflow = 'auto';
+    ";
+
+            try
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript(killSurveysScript);
+            }
+            catch
+            {
+            }
+
+            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(15));
+            var element = wait.Until(d => d.FindElement(CommonSelectors.DeleteAccountLink));
+
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
         }
     }
