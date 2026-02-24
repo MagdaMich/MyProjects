@@ -10,15 +10,15 @@ namespace SeleniumTests.Hooks
     [Binding]
     internal class Hook
     {
-        private static readonly bool RunOnSeleniumGrid = ConfigurationReader.GetConfiguration()!.Selenium!.RunOnSeleniumGrid;
+        private static readonly bool RunOnSeleniumGrid = ConfigurationReader.GetConfiguration()?.Selenium!.RunOnSeleniumGrid == true;
 
         private static DirectoryInfo? _testDirectory;
 
         private readonly ISpecFlowOutputHelper _outputHelper;
 
-        private readonly bool _takeScreenshotsAfterStep = ConfigurationReader.GetConfiguration()!.Selenium!.TakeScreenshotsAfterStep;
+        private readonly bool _takeScreenshotsAfterStep = ConfigurationReader.GetConfiguration()?.Selenium!.TakeScreenshotsAfterStep == true;
 
-        private readonly bool _takeScreenshotsAfterScenario = ConfigurationReader.GetConfiguration()!.Selenium!.TakeScreenshotsAfterScenario;
+        private readonly bool _takeScreenshotsAfterScenario = ConfigurationReader.GetConfiguration()?.Selenium!.TakeScreenshotsAfterScenario == true;
 
         private readonly Screenshots _screenshots;
 
@@ -36,19 +36,7 @@ namespace SeleniumTests.Hooks
                 SeleniumServer.StartServer(AppDomain.CurrentDomain.BaseDirectory);
             }
 
-            _testDirectory = TestArtifactsDirectoryCreator.CreateTestReportDirectory()!;
-        }
-
-        [AfterStep]
-        internal void AfterStep(FeatureContext featureContext, ScenarioContext scenarioContext)
-        {
-            TakeScreenshots(featureContext, scenarioContext, _takeScreenshotsAfterStep);
-        }
-
-        [AfterScenario]
-        internal void AfterScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
-        {
-            TakeScreenshots(featureContext, scenarioContext, _takeScreenshotsAfterScenario);
+            _testDirectory = TestArtifactsDirectoryCreator.CreateTestReportDirectory();
         }
 
         [AfterTestRun]
@@ -63,6 +51,18 @@ namespace SeleniumTests.Hooks
             var reportName = $"Tests_Report.html";
 
             LivingDocGenerator.GenerateLivingDoc(testAssembly, reportName);
+        }
+
+        [AfterStep]
+        internal void AfterStep(FeatureContext featureContext, ScenarioContext scenarioContext)
+        {
+            TakeScreenshots(featureContext, scenarioContext, _takeScreenshotsAfterStep);
+        }
+
+        [AfterScenario]
+        internal void AfterScenario(FeatureContext featureContext, ScenarioContext scenarioContext)
+        {
+            TakeScreenshots(featureContext, scenarioContext, _takeScreenshotsAfterScenario);
         }
 
         private void TakeScreenshots(FeatureContext featureContext, ScenarioContext scenarioContext, bool takeScreenshot)

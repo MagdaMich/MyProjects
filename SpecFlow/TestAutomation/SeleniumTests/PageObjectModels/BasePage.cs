@@ -31,7 +31,7 @@ namespace SeleniumTests.PageObjectModels
 
         internal BasePage(IWebDriver driver) => _driver = driver;
 
-        public static string Email => $"userExamples123+{DateTime.Now.ToString("yyyyMMddHHmmss.fff")}@gmail.com";
+        public static string Email => $"userExamples123+{DateTime.Now:yyyyMMddHHmmss.fff}@gmail.com";
 
         internal SignUpLogin ClickLinkLogin()
         {

@@ -4,7 +4,7 @@ namespace Common.Clients
 {
     public class ApiClient
     {
-        private static readonly string? Url = Configuration.ConfigurationReader.GetConfiguration()!.Api!.WebApi;
+        private static readonly string? Url = Configuration.ConfigurationReader.GetConfiguration()?.Api?.WebApi;
 
         public async Task<RestResponse> Get(string resource)
         {
@@ -31,7 +31,7 @@ namespace Common.Clients
             return await SendRequest(resource, Method.Delete);
         }
 
-        private async Task<RestResponse> SendRequest(string resource, Method method)
+        private static async Task<RestResponse> SendRequest(string resource, Method method)
         {
             var restClient = new RestClient(Url!);
 
@@ -46,7 +46,7 @@ namespace Common.Clients
             return await restClient.ExecuteAsync(request);
         }
 
-        private async Task<RestResponse> SendRequestWithJson(string resource, Method method, string json)
+        private static async Task<RestResponse> SendRequestWithJson(string resource, Method method, string json)
         {
             var restClient = new RestClient(Url!);
 

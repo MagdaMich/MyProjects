@@ -14,9 +14,9 @@ namespace Common.Selenium
 {
     internal class WebDriverFactory
     {
-        private static readonly bool RunOnSeleniumGrid = Configuration.ConfigurationReader.GetConfiguration()!.Selenium!.RunOnSeleniumGrid;
+        private static readonly bool RunOnSeleniumGrid = Configuration.ConfigurationReader.GetConfiguration()?.Selenium!.RunOnSeleniumGrid == true;
 
-        private static readonly string? SeleniumGridUri = Configuration.ConfigurationReader.GetConfiguration()!.Selenium!.SeleniumGridUri;
+        private static readonly string? SeleniumGridUri = Configuration.ConfigurationReader.GetConfiguration()?.Selenium!.SeleniumGridUri;
 
         private IWebDriver? _driver;
 

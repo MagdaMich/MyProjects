@@ -2,9 +2,9 @@
 
 namespace Common.Selenium
 {
-    public class WebDriverProvider : IDisposable
+    public sealed class WebDriverProvider : IDisposable
     {
-        private static readonly string Browser = Configuration.ConfigurationReader.GetConfiguration()!.Selenium!.Browser!;
+        private static readonly string Browser = Configuration.ConfigurationReader.GetConfiguration()?.Selenium!.Browser!;
 
         private readonly Lazy<IWebDriver> _driverLazy;
 

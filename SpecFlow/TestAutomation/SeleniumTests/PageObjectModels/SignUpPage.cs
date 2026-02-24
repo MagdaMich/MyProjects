@@ -40,7 +40,7 @@ namespace SeleniumTests.PageObjectModels
 
         internal void ScroolOnTheBottomPage()
         {
-            Actions actions = new Actions(_driver);
+            var actions = new Actions(_driver);
 
             var element1 = _driver!.FindElement(CommonSelectors.SubscriptionSendButton);
 
@@ -61,19 +61,19 @@ namespace SeleniumTests.PageObjectModels
 
         internal void SelectDay()
         {
-            SelectElement selectDay = new SelectElement(_driver.FindElement(SignUpSelectors.DropdownDay));
+            var selectDay = new SelectElement(_driver.FindElement(SignUpSelectors.DropdownDay));
             selectDay.SelectByValue("16");
         }
 
         internal void SelectMonth()
         {
-            SelectElement selectMonth = new SelectElement(_driver.FindElement(SignUpSelectors.DropdownMonth));
+            var selectMonth = new SelectElement(_driver.FindElement(SignUpSelectors.DropdownMonth));
             selectMonth.SelectByValue("4");
         }
 
         internal void SelectYear()
         {
-            SelectElement selectYear = new SelectElement(_driver.FindElement(SignUpSelectors.DropdownYear));
+            var selectYear = new SelectElement(_driver.FindElement(SignUpSelectors.DropdownYear));
             selectYear.SelectByValue("1994");
         }
 
@@ -119,7 +119,7 @@ namespace SeleniumTests.PageObjectModels
 
         internal void SelectCountry()
         {
-            SelectElement selectCountry = new SelectElement(_driver.FindElement(SignUpSelectors.DropdownCountry));
+            var selectCountry = new SelectElement(_driver.FindElement(SignUpSelectors.DropdownCountry));
             selectCountry.SelectByValue("United States");
         }
 
@@ -140,11 +140,6 @@ namespace SeleniumTests.PageObjectModels
 
         internal void ClikDeleteAccountLink()
         {
-            //WaitUntilElementDisplayed(CommonSelectors.DeleteAccountLink);
-            //_driver.FindElement(CommonSelectors.DeleteAccountLink).Click();
-            //var element = _driver.FindElement(CommonSelectors.DeleteAccountLink);
-            //((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
-
             _driver.SwitchTo().DefaultContent();
 
             string killSurveysScript = @"

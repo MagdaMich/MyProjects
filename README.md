@@ -23,29 +23,29 @@ These applications simulate realistic e-commerce and API testing scenarios.
 
 # 🛠 Technology Stack
 
-## Programming Languages
+### Programming Languages
 - C# (.NET 8)
 - TypeScript
 
-## UI Automation
+### UI Automation
 - Playwright (TypeScript)
 - Selenium WebDriver (C#)
 
-## API Automation
+### API Automation
 - RestSharp
 
-## BDD
+### BDD
 - SpecFlow / Reqnroll (Gherkin)
 
-## Test Frameworks
+### Test Frameworks
 - xUnit
 - Playwright Test Runner
 
-## Reporting
+### Reporting
 - Allure Reports
 - SpecFlow LivingDoc
 
-## CI/CD
+### CI/CD
 - GitHub Actions (separate pipelines per project)
 
 ---

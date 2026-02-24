@@ -9,7 +9,6 @@ namespace Common.Selenium
     {
         internal static void GetChromeOptions(ChromeOptions options)
         {
-            options.AddArgument("--disable-backgrounding-occluded-windows");
             options.AddArgument("--lang=en");
             options.AddArgument("--disable-search-engine-choice-screen");
             options.AddArgument("--start-maximized");
@@ -27,10 +26,9 @@ namespace Common.Selenium
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalOption("useAutomationExtension", false);
 
-            if (Configuration.ConfigurationReader.GetConfiguration()!.Selenium!.Headless)
+            if (Configuration.ConfigurationReader.GetConfiguration()?.Selenium?.Headless == true)
             {
                 options.AddArgument("--headless=new");
-                options.AddArgument("--disable-gpu");
                 options.AddArgument("window-size=1920,1080");
             }
 
@@ -44,7 +42,7 @@ namespace Common.Selenium
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalOption("useAutomationExtension", false);
 
-            if (Configuration.ConfigurationReader.GetConfiguration()!.Selenium!.Headless)
+            if (Configuration.ConfigurationReader.GetConfiguration()?.Selenium?.Headless == true)
             {
                 options.AddArgument("--headless");
                 options.AddArgument("--disable-gpu");
@@ -58,7 +56,7 @@ namespace Common.Selenium
             profile.SetPreference("intl.accept_languages", "en-US, en");
             profile.SetPreference("intl.locale.requested", "en-US, en");
 
-            if (Configuration.ConfigurationReader.GetConfiguration()!.Selenium!.Headless)
+            if (Configuration.ConfigurationReader.GetConfiguration()?.Selenium?.Headless == true)
             {
                 options.AddArgument("--headless");
                 options.AddArguments("--width=1920");

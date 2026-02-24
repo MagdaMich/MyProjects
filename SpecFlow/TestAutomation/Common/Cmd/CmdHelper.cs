@@ -14,7 +14,13 @@ namespace Common.Cmd
                 UseShellExecute = false,
             };
 
-            ProcessList.Add(Process.Start(startInfo)!);
+            var newProcess = Process.Start(startInfo);
+            if (newProcess != null)
+            {
+                ProcessList.Add(newProcess);
+            }
+
+            //ProcessList.Add(Process.Start(startInfo)!);
         }
 
         internal static void StopProcess()
